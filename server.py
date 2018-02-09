@@ -5,17 +5,22 @@ app.secret_key = '01189998819991197253'
 
 @app.route('/')
 def index():
-  session['counter'] +=1;
-  return render_template("index.html", counter=session['counter'])
+  session['counter']=0
+  return redirect('/increment')
 
 @app.route('/counter2', methods=['POST'])
 def plustwo():
-  session['counter'] +=1;
-  return redirect("/")
+  session['counter'] +=1
+  return redirect("/increment")
+
+@app.route('/increment')
+def increment():
+  session['counter'] +=1
+  return render_template("index.html", counter=session['counter'])
 
 @app.route('/resetcounter', methods=['POST'])
 def reset():
-  session['counter'] = 0;
+  session['counter'] = 0
   return redirect("/")
 
 @app.route('/users', methods=['POST'])
